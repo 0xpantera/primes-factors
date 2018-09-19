@@ -13,11 +13,11 @@ primes :: [Int]
 primes = sieve [2 .. 10000]
 
 
-isPrime :: Int -> Maybe Bool
+isPrime :: Int -> Either String Bool
 isPrime n
-  | n < 2 = Nothing
-  | n >= length primes = Nothing
-  | otherwise = Just (n `elem` primes)
+  | n < 2 = Left "Numbers less than 2 are not candidates for primes"
+  | n >= length primes = Left "Value exceeds limits of prime checker"
+  | otherwise = Right (n `elem` primes)
 
 
 unsafePrimeFactors :: Int -> [Int] -> [Int]
