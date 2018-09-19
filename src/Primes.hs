@@ -1,5 +1,6 @@
 module Primes
-    ( primes
+    ( isPrime
+    , primes
     ) where
 
 sieve :: [Int] -> [Int]
@@ -9,3 +10,12 @@ sieve (nextPrime:rest) = nextPrime : sieve noFactors
 
 primes :: [Int]
 primes = sieve [2 .. 10000]
+
+
+isPrime :: Int -> Maybe Bool
+isPrime n
+  | n < 0 = Nothing
+  | n >= length primes = Nothing
+  | otherwise = Just (n `elem` primes)
+
+  
