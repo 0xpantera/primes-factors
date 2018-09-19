@@ -14,7 +14,7 @@ primes = sieve [2 .. 10000]
 
 isPrime :: Int -> Maybe Bool
 isPrime n
-  | n < 0 = Nothing
+  | n < 2 = Nothing
   | n >= length primes = Nothing
   | otherwise = Just (n `elem` primes)
 
