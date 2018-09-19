@@ -1,6 +1,7 @@
 module Primes
     ( isPrime
     , primes
+    , primeFactors
     ) where
 
 sieve :: [Int] -> [Int]
