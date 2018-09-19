@@ -29,10 +29,10 @@ unsafePrimeFactors n (next:primes) = if n `mod` next == 0
                                        else unsafePrimeFactors n primes
 
 
-primeFactors :: Int -> Maybe [Int]
+primeFactors :: Int -> Either String [Int]
 primeFactors n
-  | n < 2 = Nothing
-  | n >= length primes = Nothing
-  | otherwise = Just (unsafePrimeFactors n primesLessThanN)
+  | n < 2 = Left "Numbers less than 2 are not candidates for primes"
+  | n >= length primes = Left "Value exceeds limits of prime checker"
+  | otherwise = Right (unsafePrimeFactors n primesLessThanN)
   where primesLessThanN = filter (<= n) primes
   
