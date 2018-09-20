@@ -4,6 +4,8 @@ module Primes
     , primeFactors
     ) where
 
+import Primes.Types
+
 sieve :: [Int] -> [Int]
 sieve [] = []
 sieve (nextPrime:rest) = nextPrime : sieve noFactors
@@ -13,10 +15,10 @@ primes :: [Int]
 primes = sieve [2 .. 10000]
 
 
-isPrime :: Int -> Either String Bool
+isPrime :: Int -> Either PrimeError Bool
 isPrime n
-  | n < 2 = Left "Numbers less than 2 are not candidates for primes"
-  | n >= length primes = Left "Value exceeds limits of prime checker"
+  | n < 2 = Left InvalidValue
+  | n >= length primes = Left TooLarge
   | otherwise = Right (n `elem` primes)
 
 
@@ -29,10 +31,9 @@ unsafePrimeFactors n (next:primes) = if n `mod` next == 0
                                        else unsafePrimeFactors n primes
 
 
-primeFactors :: Int -> Either String [Int]
+primeFactors :: Int -> Either PrimeError [Int]
 primeFactors n
-  | n < 2 = Left "Numbers less than 2 are not candidates for primes"
-  | n >= length primes = Left "Value exceeds limits of prime checker"
+  | n < 2 = Left InvalidValue
+  | n >= length primes = Left TooLarge
   | otherwise = Right (unsafePrimeFactors n primesLessThanN)
   where primesLessThanN = filter (<= n) primes
-  
